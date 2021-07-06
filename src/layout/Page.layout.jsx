@@ -1,26 +1,26 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Helmet, HelmetProvider } from 'react-helmet-async'
+import PropTypes from 'prop-types';
+import React from 'react';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 const PageWrapper = ({ pageTitle, children }) => (
-  <HelmetProvider>
-    {pageTitle && (
-      <Helmet defer={false}>
-        <title>{pageTitle}</title>
-      </Helmet>
-    )}
+    <HelmetProvider>
+        {pageTitle && (
+            <Helmet defer={false}>
+                <title>{pageTitle}</title>
+            </Helmet>
+        )}
 
-    {children}
-  </HelmetProvider>
-)
+        {children}
+    </HelmetProvider>
+);
 
 PageWrapper.propTypes = {
-  pageTitle: PropTypes.string,
-  children: PropTypes.node.isRequired,
-}
+    pageTitle: PropTypes.string,
+    children: PropTypes.node.isRequired,
+};
 
 PageWrapper.defaultProps = {
-  pageTitle: 'React',
-}
+    pageTitle: 'React',
+};
 
-export default PageWrapper
+export default PageWrapper;
