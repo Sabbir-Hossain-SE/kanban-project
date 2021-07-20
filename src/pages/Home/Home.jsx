@@ -1,8 +1,9 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import AddTaskbar from '../../components/AddTaskbar';
-import TaskHandlerBoard from '../../components/TaskHandlerBoard';
+import Dashboard from '../../components/Dashboard';
+import Sidebar from '../../components/Sidebar';
+import TaskContextProvider from '../../contextapi/TaskContext';
 import WithTopBar from '../../layout/WithTopBar';
 
 const Home = () => {
@@ -11,16 +12,17 @@ const Home = () => {
 
     return (
         <>
-            <WithTopBar pageTitle="Onboarding" backButtonController={backButtonController}>
-                <HomeContainer>
-                    <TaskManagingContainer>
-                        <AddTaskbar />
-                        <HorizontalGap />
-                        <TaskGroupCardWrapper>
-                            <TaskHandlerBoard />
-                        </TaskGroupCardWrapper>
-                    </TaskManagingContainer>
-                </HomeContainer>
+            <WithTopBar pageTitle="Home" backButtonController={backButtonController}>
+                <Wrapper>
+                    <TaskContextProvider>
+                        <Sidebar />
+                        <HomeContainer>
+                            <TaskManagingContainer>
+                                <Dashboard />
+                            </TaskManagingContainer>
+                        </HomeContainer>
+                    </TaskContextProvider>
+                </Wrapper>
             </WithTopBar>
         </>
     );
@@ -37,18 +39,12 @@ const HomeContainer = styled.div`
 const TaskManagingContainer = styled.div`
     position: relative;
     height: 94%;
-    width: 70%;
+    width: 65%;
     margin: auto;
     padding: 4rem 2rem;
     background-color: #d4e0fc;
     border-radius: 12px;
 `;
-const TaskGroupCardWrapper = styled.div`
-    widht: 100%;
-    height: calc(100% - 8.8rem);
-    padding: 0.5rem;
-`;
-const HorizontalGap = styled.div`
-    width: 100%;
-    height: 3.5rem;
+const Wrapper = styled.div`
+    display: flex;
 `;

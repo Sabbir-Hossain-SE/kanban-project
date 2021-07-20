@@ -9,13 +9,9 @@ const Onboarding = () => {
     const backButtonController = () => history.push('/home');
 
     return (
-        <>
-            <WithTopBar pageTitle="Onboarding" backButtonController={backButtonController}>
-                <OnboardingContaianer>
-                    <h1>Onboarding Page</h1>
-                </OnboardingContaianer>
-            </WithTopBar>
-        </>
+        <WithTopBar pageTitle="Onboarding" backButtonController={backButtonController}>
+            <OnboardingContaianer />
+        </WithTopBar>
     );
 };
 

@@ -7,22 +7,23 @@ function TaskGroupCard({
     list,
     dragging,
     handleDragEnter,
-    handletDragStart,
+    handlCetDragStart,
     getStyles,
     grp,
     grpI,
+    handletDragStart,
 }) {
     if (list) {
         return (
             <Wrapper
-                key={grp.title}
+                key={grp.groupTitle}
                 onDragEnter={
                     dragging && !grp.items.length
                         ? (e) => handleDragEnter(e, { grpI, itemI: 0 })
                         : null
                 }
             >
-                <Title>{grp.title}</Title>
+                <Title>{grp.groupTitle}</Title>
                 <TaskCard
                     grp={grp}
                     grpI={grpI}

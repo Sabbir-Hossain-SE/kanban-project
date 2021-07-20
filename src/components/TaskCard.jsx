@@ -6,7 +6,7 @@ const TaskCard = ({ grp, grpI, handletDragStart, handleDragEnter, getStyles, dra
         {grp.items.map((item, itemI) => (
             <Task
                 draggable
-                key={item}
+                key={itemI}
                 onDragStart={(e) => handletDragStart(e, { grpI, itemI })}
                 onDragEnter={
                     dragging
@@ -17,7 +17,7 @@ const TaskCard = ({ grp, grpI, handletDragStart, handleDragEnter, getStyles, dra
                 }
                 className={dragging ? getStyles({ grpI, itemI }) : 'task'}
             >
-                {item}
+                {item.description}
             </Task>
         ))}
     </div>

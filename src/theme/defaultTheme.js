@@ -3,7 +3,7 @@ const DefaultTheme = {
         primary: '#FFCC40',
         secondary: '#F8F8FB',
         tertiary: '#5B5B5B',
-        dark: '#000000',
+        dark: '##000431',
         light: '#FFFFFF',
         warning: '#FF924A',
         danger: '#FF3131',

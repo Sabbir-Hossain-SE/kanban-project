@@ -5,8 +5,8 @@ import Onboarding from './pages/Onboarding/Onboarding';
 
 const App = () => (
     <Switch>
-        <Route path="/onboarding" component={Onboarding} />
         <Route path="/home" component={Home} />
+        <Route path="/" component={Onboarding} />
     </Switch>
 );
 
