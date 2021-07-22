@@ -82,7 +82,8 @@ export const creatProject = async (projName, phaseNum) => {
     });
 };
 
-export const updateDataWithStatus = async (data, resURL) => {
+export const updateData = async (data, resURL) => {
+    console.log(`hit on update${resURL}`);
     const requestOptions = {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },

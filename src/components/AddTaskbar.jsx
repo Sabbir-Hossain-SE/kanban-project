@@ -5,7 +5,7 @@
 import React, { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import { addData } from '../api/API';
+import { addData, getData } from '../api/API';
 import { TaskContext } from '../contextapi/TaskContext';
 import colors from '../theme/colors';
 import Button from './Button';
@@ -18,19 +18,37 @@ const AddTaskbar = () => {
         setUpdate(true);
     }, [setUpdate]);
     let taskDescription;
-    const handleAddButton = () => {
+
+    const handleAddButton = async () => {
+        console.log('add task');
+        let currentPhase;
+
+        try {
+            const userId = '60e8da2f3a9a713b78d15bda';
+            const resURL = `project/?id=${userId}&status=active`;
+            const currentProject = await getData(resURL);
+            console.log(currentProject);
+
+            const resURL1 = `phase/?id=${currentProject[0]._id}&status=ongoing`;
+            currentPhase = await getData(resURL1);
+            console.log(currentPhase);
+        } catch (error) {
+            console.log('Somethis happened when try to retrive data.');
+        }
+
         if (taskDescription) {
-            const data = {
+            console.log('got it');
+            const data = await {
                 groupTitle: 'To Do',
                 groupNumber: 1,
-                phaseId: phase[0]._id,
+                phaseId: currentPhase[0]._id,
                 taskItem: {
                     description: taskDescription,
                     comment: 'comment',
                 },
             };
 
-            addData(data, 'task');
+            await addData(data, 'task');
             history.go('/home');
         }
     };

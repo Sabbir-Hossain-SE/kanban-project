@@ -1,26 +1,49 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable array-callback-return */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-unused-vars */
-import React, { useContext, useState } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
+import React, { useContext, useEffect, useState } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
-import { getData } from '../api/API';
+import { getData, updateData } from '../api/API';
 import { TaskContext } from '../contextapi/TaskContext';
 import Selectbox from './Selectbox';
 
-const PhaseSelectBar = () => {
-    const { phase, setRequireDBUpdate, task, setTask } = useContext(TaskContext);
-    const [selectedPhase, setSelectedPhase] = useState('Choose Phase');
-
+let isFirstSelected = true;
+const PhaseSelectBar = ({ isProjectSelected }) => {
+    const { phase, setRequireDBUpdate, task, setTask, project, setPhase } = useContext(TaskContext);
+    const [selectedPhase, setSelectedPhase] = useState();
+    let initialPhase;
     const taskShouldBeUpdated = async (data) => {
+        isFirstSelected = false;
         const restUrl = `task/?id=${data._id}`;
         const res = await getData(restUrl);
 
-        if (task) {
-            setTask(res);
-        } else {
-            toast.info('🦄 You have no more task. Please add some task');
+        setTask(res);
+
+        if (data.status === 'queued') {
+            await phase.map((val) => {
+                if (val.status === 'ongoing') {
+                    updateData({ status: 'ongoing' }, `phase/${val._id}`);
+                }
+            });
+            await updateData({ status: 'queued' }, `phase/${data._id}`);
         }
     };
+
+    useEffect(async () => {
+        const resURL = `phase/?id=${project[0]._id}`;
+        const res = await getData(resURL);
+        try {
+            res.map((val) => {
+                if (val.status === 'ongoing') {
+                    isFirstSelected && setSelectedPhase(val.name);
+                    isFirstSelected && setPhase(res);
+                }
+            });
+        } catch (error) {
+            console.log('First Attemped Miss');
+        }
+    }, [project]);
     return (
         <>
             <Selectbox
@@ -29,17 +52,6 @@ const PhaseSelectBar = () => {
                 options={phase}
                 setSelectedPhase={setSelectedPhase}
                 dataShouldBeUpdated={taskShouldBeUpdated}
-            />
-            <ToastContainer
-                position="bottom-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
             />
         </>
     );

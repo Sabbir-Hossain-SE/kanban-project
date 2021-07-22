@@ -42,12 +42,12 @@ const TaskHandlerBoard = () => {
         // }
         // console.log();
 
-        if (localStorage.getItem('List')) {
-            setData(JSON.parse(localStorage.getItem('List')));
-            prevTask = task;
-        } else {
-            setData(processedData);
-        }
+        // if (localStorage.getItem('List')) {
+        //     setData(JSON.parse(localStorage.getItem('List')));
+        //     prevTask = task;
+        // } else {
+        setData(processedData);
+        // }
     }, [task, setData]);
 
     // Data List Processing

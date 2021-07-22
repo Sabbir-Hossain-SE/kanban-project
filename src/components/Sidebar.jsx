@@ -78,11 +78,20 @@ const SlickBar = styled.ul`
     transition: all 0.6s ease;
     border-radius: 0 25px 25px 0;
 `;
+const Item = styled.div`
+    width: 100%;
+    padding: 1rem 0;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
 
+    visibility: ${(props) => (props.clicked ? 'visible' : 'hidden')};
+`;
 const Sidebar = () => {
-    const [click, setClick] = useState(false);
+    const [click, setClick] = useState(true);
     const handleClick = () => setClick(!click);
     const [selected, setSelected] = useState('Choose One');
+    const [isProjectSelected, setisProjectSelected] = useState(false);
 
     return (
         <Container selected={selected} setSelected={setSelected}>
@@ -91,16 +100,12 @@ const Sidebar = () => {
             </Button>
             <SidebarContainer>
                 <SlickBar clicked={click}>
-                    {true && (
-                        <>
-                            <Item>
-                                <ProjectSelectBar />
-                            </Item>
-                            <Item>
-                                <PhaseSelectBar />
-                            </Item>
-                        </>
-                    )}
+                    <Item clicked={click}>
+                        <ProjectSelectBar setisProjectSelected={setisProjectSelected} />
+                    </Item>
+                    <Item clicked={click}>
+                        <PhaseSelectBar isProjectSelected={isProjectSelected} />
+                    </Item>
                 </SlickBar>
             </SidebarContainer>
         </Container>
@@ -108,12 +113,3 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
-
-const Item = styled.div`
-    width: 100%;
-    padding: 1rem 0;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    transition: all 0.4s ease;
-`;
