@@ -27,6 +27,8 @@ const PhaseSelectBar = ({ isProjectSelected }) => {
                 }
             });
             await updateData({ status: 'queued' }, `phase/${data._id}`);
+            // const res1 = await getData(restUrl);
+            // setPhase(res1);
         }
     };
 
@@ -43,7 +45,7 @@ const PhaseSelectBar = ({ isProjectSelected }) => {
         } catch (error) {
             console.log('First Attemped Miss');
         }
-    }, [project]);
+    }, [task]);
     return (
         <>
             <Selectbox

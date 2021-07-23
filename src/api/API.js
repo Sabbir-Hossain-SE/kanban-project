@@ -45,14 +45,22 @@ export const addData = async (data, resURL) => {
     return content;
 };
 
-export const deleteData = async (id, resURL) => {
-    const response = await fetch(`${url}${resURL}`, {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        // body: JSON.stringify(id),
-    });
+export const deleteData = async (resURL) => {
+    let response;
+    try {
+        response = await fetch(`${url}${resURL}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (response.status !== 200) {
+            throw new Error('Something is worng!');
+        }
+    } catch (err) {
+        console.log(err.message);
+    }
 
     const data = await response.json();
 };

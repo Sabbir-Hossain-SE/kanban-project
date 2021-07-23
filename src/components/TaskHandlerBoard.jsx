@@ -9,7 +9,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { addData } from '../api/API';
+import { addData, deleteData, getData } from '../api/API';
 import { TaskContext } from '../contextapi/TaskContext';
 import TaskGroupCard from './TaskGroupCard';
 
@@ -20,7 +20,7 @@ const defaultData = [
     { groupTitle: 'In Progress', groupNumber: 2, phaseId: '', items: [] },
     { groupTitle: 'Done', groupNumber: 3, phaseId: '', items: [] },
 ];
-let firstTime = true;
+
 let prevTask;
 
 const TaskHandlerBoard = () => {
@@ -29,24 +29,25 @@ const TaskHandlerBoard = () => {
     const [haveProject, sethHaveProject] = useState(false);
     const [data, setData] = useState(defaultData);
     // localStorage.clear('List');
+    let firstTime = true;
     useEffect(async () => {
         const processedData = await formatData(task);
         console.log('got the point');
-        console.log(task);
-        // if (firstTime && prevTask !== task) {
-        //     setData(processedData);
-        //     console.log('local sotrage status');
-        //     prevTask = task;
-        // } else {
-        //     setData();
-        // }
-        // console.log();
+        await console.log(project);
+        if (firstTime) {
+            setData(processedData);
+            firstTime = false;
+            console.log('local sotrage status');
+        } else {
+            setData(JSON.parse(localStorage.getItem('List')));
+        }
+        console.log();
 
         // if (localStorage.getItem('List')) {
         //     setData(JSON.parse(localStorage.getItem('List')));
         //     prevTask = task;
         // } else {
-        setData(processedData);
+        //     setData(processedData);
         // }
     }, [task, setData]);
 
@@ -136,21 +137,21 @@ const TaskHandlerBoard = () => {
                 );
                 dragItem.current = targetItem;
                 localStorage.setItem('List', JSON.stringify(newList));
+
                 console.log('newList');
                 console.log(newList);
                 return newList;
             });
         }
     };
-    const handleDragEnd = (e) => {
+    const handleDragEnd = async (e) => {
         setDragging(false);
         dragItem.current = null;
         dragItemNode.current.removeEventListener('dragend', handleDragEnd);
         dragItemNode.current = null;
 
-        // deleteData(phase[0]._id, `task/${phase[0]._id}`);
-    };
-    const dataInserting = async () => {
+        let currentPhase;
+
         const UData = {
             taskItem: {},
             groupTitle: '',
@@ -159,18 +160,36 @@ const TaskHandlerBoard = () => {
             taskItem: { description: '', comment: '' },
         };
 
-        const newData = JSON.parse(localStorage.getItem('List'));
+        try {
+            const userId = '60e8da2f3a9a713b78d15bda';
+            const resURL = `project/?id=${userId}&status=active`;
+            const currentProject = await getData(resURL);
 
-        await newData.map(async (data, i) => {
-            UData.groupNumber = data.groupNumber;
-            UData.groupTitle = data.groupTitle;
-            UData.phaseId = phase[0]._id;
-            data.items.map(async (val) => {
-                UData.taskItem = val;
+            const resURL1 = `phase/?id=${currentProject[0]._id}&status=ongoing`;
+            currentPhase = await getData(resURL1);
+        } catch (error) {
+            console.log('Somethis happened when try to retrive data.');
+        }
+        if (currentPhase) {
+            // Delete Task database
+            await deleteData(`task/${currentPhase[0]._id}`);
 
-                await addData(UData, 'task');
+            // Updata Task DataBase by Local Storage
+            const newData = JSON.parse(localStorage.getItem('List'));
+
+            await newData.map(async (data, i) => {
+                UData.groupNumber = data.groupNumber;
+                UData.groupTitle = data.groupTitle;
+                UData.phaseId = currentPhase[0]._id;
+                data.items.map(async (val) => {
+                    UData.taskItem = val;
+                    const updateDtata = _.cloneDeep(UData);
+                    addData(UData, 'task');
+                    console.log('got the data');
+                    console.log(updateDtata);
+                });
             });
-        });
+        }
     };
 
     const getStyles = (item) => {
