@@ -1,17 +1,15 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 import styled from 'styled-components';
 import BrandLogo from '../assets/logo.png';
-import Button from './Button';
 
-const Navbar = ({ backButtonController }) => (
+const Navbar = () => (
     <NavbarWrapper>
         <TopBar>
             <Logo src={BrandLogo} />
             <LoginButtonWrapper>
-                <LoginButton btnTitle="Login" btnOnClick={backButtonController}>
+                {/* <LoginButton btnTitle="Login" btnOnClick={backButtonController}>
                     Login
-                </LoginButton>
+                </LoginButton> */}
             </LoginButtonWrapper>
         </TopBar>
     </NavbarWrapper>
@@ -37,14 +35,14 @@ const TopBar = styled.div`
     align-items: center;
 `;
 const LoginButtonWrapper = styled.div``;
-const LoginButton = styled(Button)`
-    height: 40px;
-`;
+// const LoginButton = styled(Button)`
+//     height: 40px;
+// `;
 
 const Logo = styled.img`
     height: 45px;
 `;
 
-Navbar.propTypes = {
-    backButtonController: PropTypes.func.isRequired,
-};
+// Navbar.propTypes = {
+//     backButtonController: PropTypes.func.isRequired,
+// };

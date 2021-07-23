@@ -4,9 +4,9 @@ import styled from 'styled-components';
 import Navbar from '../components/Navbar';
 import PageWrapper from './Page.layout';
 
-const WithTopBar = ({ pageTitle, children, backButtonController }) => (
+const WithTopBar = ({ pageTitle, children }) => (
     <PageWrapper pageTitle={pageTitle}>
-        <Navbar backButtonController={backButtonController} />
+        <Navbar />
         <ContentWrapper>{children}</ContentWrapper>
     </PageWrapper>
 );
@@ -19,7 +19,6 @@ const ContentWrapper = styled.div`
 WithTopBar.propTypes = {
     pageTitle: PropTypes.string,
     children: PropTypes.node.isRequired,
-    backButtonController: PropTypes.func.isRequired,
 };
 
 WithTopBar.defaultProps = {

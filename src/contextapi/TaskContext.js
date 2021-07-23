@@ -22,7 +22,7 @@ const TaskContextProvider = (props) => {
     let projectResponse;
 
     const getActiveProject = async () => {
-        const userId = '60e8da2f3a9a713b78d15bda';
+        const userId = '60ecb724c43b43153018a012';
         const resURL = `project/?id=${userId}&status=active`;
         projectResponse = await getData(resURL);
 
@@ -41,12 +41,16 @@ const TaskContextProvider = (props) => {
     };
 
     const getTaskByActivePhase = async (phaseResponse) => {
-        const resURL = `task/?id=${phaseResponse[0]._id}`;
-        const taskResponse = await getData(resURL);
-        await setTask(taskResponse);
+        try {
+            const resURL = `task/?id=${phaseResponse[0]._id}`;
+            const taskResponse = await getData(resURL);
+            await setTask(taskResponse);
+        } catch (error) {
+            console.log('Got data.');
+        }
     };
     const getAllProjectData = async () => {
-        const userId = '60e8da2f3a9a713b78d15bda';
+        const userId = '60ecb724c43b43153018a012';
         const resURL = `project/?id=${userId}`;
         const response = await getData(resURL);
         setAllProjects(response);

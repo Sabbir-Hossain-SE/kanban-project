@@ -80,7 +80,7 @@ const ProjectCreatingModal = ({ showModal, setShowModal }) => {
                             </MdInfo>
                             <MdContent>
                                 <Logo />
-                                <h1>Aar you Ready! </h1>
+                                <Heading>Aar you Ready! </Heading>
                                 <HorizontalGap />
                                 <InputWrapper>
                                     <NameInput
@@ -176,6 +176,9 @@ const MdCloseButton = styled(MdClose)`
     padding: 0;
     z-index: 12;
 `;
+const Heading = styled.h1`
+    font-family: 'Varela Round', sans-serif;
+`;
 const Input = styled.input`
     position: relative;
     width: 100%;
@@ -221,9 +224,10 @@ const UL = styled.ul`
     list-style-type: square;
 `;
 const LI = styled.li`
-    font-size: 1.3rem;
+    font-family: 'Varela Round', sans-serif;
+    font-size: 1.4rem;
     font-weight: bold;
-    color: rgba(0, 0, 0, 0.6);
+    color: rgba(0, 0, 0, 0.7);
     margin-bottom: 1rem;
 `;
 const ListWrapper = styled.div`

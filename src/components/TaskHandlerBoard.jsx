@@ -161,7 +161,7 @@ const TaskHandlerBoard = () => {
         };
 
         try {
-            const userId = '60e8da2f3a9a713b78d15bda';
+            const userId = '60ecb724c43b43153018a012';
             const resURL = `project/?id=${userId}&status=active`;
             const currentProject = await getData(resURL);
 
@@ -200,7 +200,7 @@ const TaskHandlerBoard = () => {
     };
     const Group = () => (
         <Wrapper>
-            {task &&
+            {task.length > 0 &&
                 list.map((grp, grpI) => (
                     <TaskGroupCard
                         key={grp.groupTitle}

@@ -1,32 +1,26 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import Dashboard from '../../components/Dashboard';
 import Sidebar from '../../components/Sidebar';
 import TaskContextProvider from '../../contextapi/TaskContext';
 import WithTopBar from '../../layout/WithTopBar';
 
-const Home = () => {
-    const history = useHistory();
-    const backButtonController = () => history.push('/home');
-
-    return (
-        <>
-            <WithTopBar pageTitle="Home" backButtonController={backButtonController}>
-                <Wrapper>
-                    <TaskContextProvider>
-                        <Sidebar />
-                        <HomeContainer>
-                            <TaskManagingContainer>
-                                <Dashboard />
-                            </TaskManagingContainer>
-                        </HomeContainer>
-                    </TaskContextProvider>
-                </Wrapper>
-            </WithTopBar>
-        </>
-    );
-};
+const Home = () => (
+    <>
+        <WithTopBar pageTitle="Home">
+            <Wrapper>
+                <TaskContextProvider>
+                    <Sidebar />
+                    <HomeContainer>
+                        <TaskManagingContainer>
+                            <Dashboard />
+                        </TaskManagingContainer>
+                    </HomeContainer>
+                </TaskContextProvider>
+            </Wrapper>
+        </WithTopBar>
+    </>
+);
 
 export default Home;
 

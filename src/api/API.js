@@ -66,11 +66,12 @@ export const deleteData = async (resURL) => {
 };
 
 export const creatProject = async (projName, phaseNum) => {
-    const userId = '60e8da2f3a9a713b78d15bda';
+    const userId = '60ecb724c43b43153018a012';
     const userRestURL = 'project';
     const projData = {
         name: projName,
         description: 'my project description',
+        status: 'active',
         userId,
     };
 
@@ -83,7 +84,7 @@ export const creatProject = async (projName, phaseNum) => {
 
     await arr.map(async (data, i) => {
         const phaseData = {
-            name: `Phase${2}`,
+            name: `Phase${i + 1}`,
             projectId,
         };
         await addData(phaseData, pahseRest);
